@@ -1,5 +1,10 @@
 <template>
     <div>Header</div>
+    <ul>
+        <li><RouterLink to="/">Home</RouterLink></li>
+        <li><RouterLink to="/dorms">Dorms</RouterLink></li>
+        <li><RouterLink to="/specialties">Specialties</RouterLink></li>
+    </ul>
 </template>
 
 <script setup>
