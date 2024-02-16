@@ -1,20 +1,17 @@
 <template>
-    <b-navbar toggleable="lg" type="dark" variant="primary">
-        <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-                <b-nav-item><RouterLink to="/">Home</RouterLink></b-nav-item>
-                <b-nav-item><RouterLink to="/dorms">Dorms</RouterLink></b-nav-item>
-                <b-nav-item><RouterLink to="/specialties">Specialties</RouterLink></b-nav-item>
-            </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+    <div>Header</div>
+    <ul>
+        <li><RouterLink to="/">Home</RouterLink></li>
+        <li><RouterLink to="/dorms">Dorms</RouterLink></li>
+        <li><RouterLink to="/specialties">Specialties</RouterLink></li>
+    </ul>
 </template>
 
 <script setup>
 
 </script>
 
-<!-- <style scoped>
+<style scoped>
 div {
     position: fixed;
     width: 100%;
@@ -22,4 +19,4 @@ div {
     top: 0;
     background-color: aqua;
 }
-</style> -->
+</style>
