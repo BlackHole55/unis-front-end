@@ -1,20 +1,20 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <AppHeader style="z-index: 1;"></AppHeader>
   <main>
-    <RouterView></RouterView>
+    <RouterView style="padding-bottom: 5rem;"></RouterView>
   </main>
+  <AppFooter></AppFooter>
 </template>
 
 <script>
-// import MainApp from './components/MainApp.vue'
 import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 
 export default {
   name: 'App',
   components: {
-    // MainApp,
-    AppHeader
+    AppHeader,
+    AppFooter
   }
 }
 </script>
@@ -24,8 +24,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
+  position: relative;
+  min-height: 100vh;
 }
 </style>
