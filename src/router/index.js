@@ -4,6 +4,7 @@ import MainApp from '../components/MainApp.vue'
 import DormsApp from '../components/DormsApp.vue'
 import SpecialtiesApp from '../components/SpecialtiesApp.vue'
 import NotFound from '../components/NotFound.vue'
+import UniversityApp from '../components/UniversityApp.vue'
 
 const routes = [
     {
@@ -22,10 +23,15 @@ const routes = [
         component: SpecialtiesApp
     },
     {
+        path: '/universities/:id',
+        name: 'UniversityApp',
+        component: UniversityApp
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound
-    }
+    },
 ];
 const router = createRouter({
     history: createWebHistory(),
