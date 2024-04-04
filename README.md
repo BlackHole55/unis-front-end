@@ -1,24 +1,4 @@
-# unis-f
+# UNIS (Front-end)
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Unis is my pet-project, a site where you can see basic information about universities.
+Made to speed up and simplify the process of finding a suitable university.
