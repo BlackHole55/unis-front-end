@@ -5,6 +5,8 @@ import DormsApp from '../components/DormsApp.vue'
 import SpecialtiesApp from '../components/SpecialtiesApp.vue'
 import NotFound from '../components/NotFound.vue'
 import UniversityApp from '../components/UniversityApp.vue'
+import LoginAdmin from '../components/LoginAdmin.vue'
+import AdminMain from '../components/AdminMain.vue'
 
 const routes = [
     {
@@ -26,6 +28,16 @@ const routes = [
         path: '/universities/:id',
         name: 'UniversityApp',
         component: UniversityApp
+    },
+    {
+        path: '/login',
+        name: 'LoginAdmin',
+        component: LoginAdmin
+    },
+    {
+        path: '/admin/main',
+        name: 'AdminMain',
+        component: AdminMain
     },
     {
         path: '/:catchAll(.*)',
