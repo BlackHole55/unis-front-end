@@ -1,6 +1,6 @@
 <template>
     <footer class="mt-4 text-center position-absolute bottom-0 w-100">
-        <div class="pt-2">Made by Meirhan</div>
+        <div class="pt-2">Meirhan's Pet Project</div>
         <div class="py-1">Contact: syzdykovmr@gmail.com</div>
     </footer>
 </template>

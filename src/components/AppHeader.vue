@@ -17,7 +17,7 @@
                     <a class="nav-link"><RouterLink to="/specialties">Specialties</RouterLink></a>
                 </li>
             </ul>
-            <a class="nav-link" id="admin"><RouterLink to="Admin">Admin</RouterLink></a>
+            <a class="nav-link" id="admin"><RouterLink to="/login">Admin</RouterLink></a>
         </div>
     </div>
 </nav>
