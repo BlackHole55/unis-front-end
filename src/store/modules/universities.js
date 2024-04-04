@@ -1,14 +1,13 @@
 import axios from "axios";
 
 const state = {
-    universities: [],
     searchedUniversities: [],
+    university: [],
 };
 
 const getters = {
-    getUniversities: (state) => state.universities,
     getSearchedUniversities: (state) => state.searchedUniversities,
-    // getFileredUniversities: (state) => state.fetchUniversities,
+    getUniversity: (state) => state.university,
 };
 
 const actions = {
@@ -20,41 +19,43 @@ const actions = {
             commit("SET_UNIVERSITIES", universities.data);
         }
         catch (error) {
-            alert(error);
             console.log(error);
         }
     },
-    // async setSearch({ commit }, search) {
-    //     try {
-    //         commit("SET_SEARCH", )
-    //     }
-    // }
+
     async search({ commit }, search){
         try {
             const searchedUniversities = await axios.post(
-                "http://localhost:8000/api/v1/universities/search", search, {
-                    headers: {
-                        'Accept': 'application/json',
-                    }
-                }
+                "universities/search", search,
             ).then(response => (this.searchedUniversities = response));
             commit("SET_UNIVERSITIES", searchedUniversities.data);
         }
         catch (error) {
-            alert(error);
             console.log(error);
         }
-    }
+    },
+
+    async fetchUniversity({ commit }, id){
+        const url = "universities/" + id.value;
+        try {
+            const university = await axios.get(
+                url
+            ).then(response => (this.university = response));
+            commit("SET_UNIVERSITY", university.data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
 };
 
 const mutations = {
     SET_UNIVERSITIES(state, universities) {
-        state.universities = universities;
         state.searchedUniversities = universities;
     },
-    // SET_SEARCHED_UNIVERSITIES(state, data) {
-    //     state.searchedUniversities = data;
-    // }
+    SET_UNIVERSITY(state, university) {
+        state.university = university;
+    },
 };
 
 export default {
