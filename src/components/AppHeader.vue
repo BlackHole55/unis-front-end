@@ -17,12 +17,34 @@
                     <a class="nav-link"><RouterLink to="/specialties">Specialties</RouterLink></a>
                 </li>
             </ul>
-            <a class="nav-link" id="admin"><RouterLink to="/login">Admin</RouterLink></a>
+            <button class="nav-link pe-3" id="admin" v-if="isLogged" @click="logOut">Log out</button>
+            <a class="nav-link" id="admin"><RouterLink to="/admin/main">Admin</RouterLink></a>
         </div>
     </div>
 </nav>
 </template> 
 
+<script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+export default {
+    setup(){
+        const store = useStore();
+
+        const isLogged = computed(() => store.getters["admin/isLogged"]);
+
+        function logOut() {
+            store.dispatch("admin/logOut");
+        }
+
+        return {
+            isLogged,
+            logOut,
+        }
+    }
+}
+</script>
 
 <style scoped>
 @media (max-width: 991.98px) {
@@ -40,6 +62,10 @@ nav {
     top: 0;
     width: 100%;
     background-color: #008080;
+    color: #fffdd0;
+}
+nav:hover {
+    color: #eeebad;
 }
 
 a {
@@ -48,4 +74,5 @@ a {
 a:hover {
     color: #eeebad;
 }
+
 </style>
