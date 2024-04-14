@@ -17,7 +17,6 @@
 
 <script>
 import { reactive, computed } from "vue";
-// onMounted, computed
 import { useStore } from "vuex";
 
 export default {
@@ -40,11 +39,14 @@ export default {
     const getCurrentAdmin = computed(() => store.getters["admin/getCurrentAdmin"]);
     const getErrors = computed(() => store.getters["admin/getErrors"]);
 
+    const getToken = computed(() => store.getters["admin/getToken"]);
+
     return {
         login,
         form,
         getCurrentAdmin,
         getErrors,
+        getToken,
     }
   }
 }
