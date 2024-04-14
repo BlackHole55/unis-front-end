@@ -3,11 +3,13 @@ import axios from "axios";
 const state = {
     searchedUniversities: [],
     university: [],
+    errors: [],
 };
 
 const getters = {
     getSearchedUniversities: (state) => state.searchedUniversities,
     getUniversity: (state) => state.university,
+    getErrors: (state) => state.errors,
 };
 
 const actions = {
@@ -47,6 +49,21 @@ const actions = {
             console.log(error);
         }
     },
+
+    async postUniversity({ commit }, {name, city, address, description, link_to_website}){
+        try {
+            const university = await axios.post(
+                "universities", {name, city, address, description, link_to_website}
+            ).then(response => (this.university = response));
+
+            commit("SET_UNIVERSITY", university.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+            }
+        }
+    },
 };
 
 const mutations = {
@@ -55,6 +72,9 @@ const mutations = {
     },
     SET_UNIVERSITY(state, university) {
         state.university = university;
+    },
+    SET_ERRORS(state, error) {
+        state.errors = error;
     },
 };
 
