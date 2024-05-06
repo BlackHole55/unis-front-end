@@ -1,5 +1,7 @@
 <template>
-    <div class="container pt-3 d-flex justify-content-center">
+    <div class="container pt-3">
+      <h1 class="text-center">Log In</h1>
+      <div class="d-flex justify-content-center">
         <form class="w-50 border p-3" @submit.prevent="login">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -12,6 +14,7 @@
             <button type="submit" id="loginBtn" class="btn  mt-2">Log In</button>
             <div class="alert alert-danger mt-2" v-if="getErrors?.response?.data?.message">{{ getErrors?.response?.data?.message }}</div>
         </form>
+      </div>
     </div>
 </template>
 
