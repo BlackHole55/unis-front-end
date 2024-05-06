@@ -55,7 +55,6 @@ const actions = {
             const university = await axios.post(
                 "universities", {name, city, address, description, link_to_website}
             ).then(response => (this.university = response));
-
             commit("SET_UNIVERSITY", university.data);
         }
         catch (error) {
@@ -64,6 +63,22 @@ const actions = {
             }
         }
     },
+
+    async updateUniversity({ commit }, {name, city, address, description, link_to_website, id}){
+        const url = "universities/" + id.value;
+        try {
+            const university = await axios.patch(
+                url, {name, city, address, description, link_to_website}
+            ).then(response => (this.university = response));
+            commit("SET_UNIVERSITY", university.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    }
 };
 
 const mutations = {
