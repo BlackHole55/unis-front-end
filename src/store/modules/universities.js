@@ -4,12 +4,14 @@ const state = {
     searchedUniversities: [],
     university: [],
     errors: [],
+    universitySpeciality: []
 };
 
 const getters = {
     getSearchedUniversities: (state) => state.searchedUniversities,
     getUniversity: (state) => state.university,
     getErrors: (state) => state.errors,
+    getUniversitySpeciality: (state) => state.universitySpeciality,
 };
 
 const actions = {
@@ -78,6 +80,38 @@ const actions = {
                 console.log(error);
             }
         }
+    },
+
+    async addSpeciality({ commit }, {speciality, price, id}){
+        const url = "universities/" + id.value + "/specialties";
+        try {
+            const universitySpeciality = await axios.post(
+                url, {speciality, price}
+            ).then(response => (this.universitySpeciality = response));
+            commit("SET_UNIVERSITY_SPECIALITY", universitySpeciality);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
+
+    async removeSpeciality({ commit }, {speciality, id}){
+        const url = "universities/" + id.value + "/specialties";
+        try {
+            const universitySpeciality = await axios.delete(
+                url, speciality
+            ).then(response => (this.universitySpeciality = response));
+            commit("SET_UNIVERSITY_SPECIALITY", universitySpeciality);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
     }
 };
 
@@ -91,6 +125,9 @@ const mutations = {
     SET_ERRORS(state, error) {
         state.errors = error;
     },
+    SET_UNIVERSITY_SPECIALITY(state, universitySpeciality) {
+        state.universitySpeciality = universitySpeciality;
+    }
 };
 
 export default {
