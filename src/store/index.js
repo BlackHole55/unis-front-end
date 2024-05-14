@@ -3,6 +3,7 @@ import VuexPersist from "vuex-persist"
 
 import universities from "./modules/universities"
 import admin from "./modules/admin"
+import specialityUniversity from "./modules/specialityUniversity";
 
 const vuexSessionStorage = new VuexPersist({
     key: 'vuex',
@@ -13,7 +14,8 @@ const vuexSessionStorage = new VuexPersist({
 export default createStore({
     modules: {
         universities,
-        admin
+        admin,
+        specialityUniversity
     },
     plugins: [vuexSessionStorage.plugin],
 });
