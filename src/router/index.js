@@ -2,14 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios';
 
 import MainApp from '@/components/MainApp.vue'
+import AdminMain from '@/components/AdminMain.vue'
 import DormsApp from '@/components/DormsApp.vue'
+import AdminDorms from '@/components/AdminDorms.vue'
+import PostDorm from '@/components/PostDorm.vue'
 import SpecialtiesApp from '@/components/SpecialtiesApp.vue'
 import NotFound from '@/components/NotFound.vue'
 import UniversityApp from '@/components/UniversityApp.vue'
-import PostUniversity from '@/components/PostUniversity.vue';
-import UpdateUniversity from '@/components/UpdateUniversity.vue';
+import PostUniversity from '@/components/PostUniversity.vue'
+import UpdateUniversity from '@/components/UpdateUniversity.vue'
 import LoginAdmin from '@/components/LoginAdmin.vue'
-import AdminMain from '@/components/AdminMain.vue'
+
 
 const guard = function(to, from, next) {
     // check for valid auth token
@@ -25,21 +28,43 @@ const guard = function(to, from, next) {
 };
 
 const routes = [
+    //Main routes
     {
         path: '/',
         name: 'MainApp',
         component: MainApp
     },
     {
+        path: '/admin/main',
+        name: 'AdminMain',
+        component: AdminMain,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    //Dorms routes
+    {
         path: '/dorms',
         name: 'DormsApp',
         component: DormsApp
     },
     {
+        path: '/admin/dorms',
+        name: 'AdminDorms',
+        component: AdminDorms
+    },
+    {
+        path: '/admin/dorms/post',
+        name: 'PostDorms',
+        component: PostDorm
+    },
+    //Speccialties routes
+    {
         path: '/specialties',
         name: 'SpecialtiesApp',
         component: SpecialtiesApp
     },
+    //Universities routes
     {
         path: '/universities/:id',
         name: 'UniversityApp',
@@ -61,19 +86,13 @@ const routes = [
             guard(to, from, next);
         }
     },
+    //Admin routes
     {
         path: '/login',
         name: 'LoginAdmin',
         component: LoginAdmin
     },
-    {
-        path: '/admin/main',
-        name: 'AdminMain',
-        component: AdminMain,
-        beforeEnter: (to, from, next) => {
-            guard(to, from, next);
-        }
-    },
+    //404 route
     {
         path: '/:catchAll(.*)',
         name: 'NotFound',
