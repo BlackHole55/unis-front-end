@@ -45,6 +45,20 @@
                         <button class="btn" id="btn" type="submit">Add</button> 
                     </div>
                 </form>
+                <h5 class="pt-3 fw-bold">Add Экзамены</h5>
+                <form @submit.prevent="addExam">
+                    <div class="d-flex flex-row">
+                        <label for="specialityUniversityId" class="fw-bold pt-2 me-1" id="speciality-university-id-label">ID</label>
+                        <input type="number" class="form-control text-end" id="specialityUniversityId" name="specialityUniversityId" placeholder="Enter ID">
+                    </div>
+                    <div class="d-flex flex-row pt-3">
+                        <label for="examId" class="fw-bold pt-2 me-1" id="exam-id-label">Exam ID</label>
+                        <input type="number" class="form-control text-end" id="examId" name="examId" placeholder="Enter exam id">
+                    </div>
+                    <div class="text-end pt-3">
+                        <button class="btn" id="btn" type="submit">Add</button> 
+                    </div>
+                </form>
                 <h5 class="pt-3 fw-bold">Специальности</h5>
                 <div v-for="specialty in getUniversity?.university?.specialties" :key="specialty.id"> 
                     <div class="card p-2 mt-3">
@@ -52,14 +66,20 @@
                         <div class="py-2">&emsp;{{ specialty.description }}</div>
                         <div v-for="specialityUniversity in getUniversity?.specialityUniversity" :key="specialityUniversity.id">
                             <div v-if="specialityUniversity.specialty_id === specialty.id">
+                                <div>ID: {{ specialityUniversity.id }}</div>
                                 <div class="card-footer d-flex justify-content-between pt-2">
                                     <a class="btn btn-outline-danger me-3" @click="removeSpeciality(specialityUniversity.specialty_id)">Delete</a>
                                     <div class="pt-2">Стоимость: {{ specialityUniversity.price_per_year_tenge }} KZT</div>
                                 </div>
                             </div>
                             <div v-for="exam in specialityUniversity.exams" :key="exam.id">
-                                <div v-if=" exam.pivot.speciality_university_id === specialty.id">
-                                    <div>{{ exam.name }}</div>
+                                <div v-if="specialityUniversity.specialty_id === specialty.id">
+                                    <div v-if=" exam.pivot.speciality_university_id === specialityUniversity.id">
+                                        <div class="card p-2 d-flex flex-row justify-content-between">
+                                            <div class="pt-2">{{ exam.name }}</div>
+                                            <button class="btn btn-outline-danger me-3" @click="removeExam(exam.pivot)">Delete</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,6 +106,8 @@ export default {
 
         const getUniversity = computed(() => store.getters["universities/getUniversity"]);
         // const getErrors = computed(() => store.getters['universities/getUniversity']);
+
+        console.log(getUniversity);
 
         function updateUniversity(event) {
             const {name, city, address, description, link_to_website} = Object.fromEntries(new FormData(event.target));
@@ -131,9 +153,36 @@ export default {
         }
 
         function removeSpeciality(specId) {
+            console.log(specId);
+
+
             store.dispatch("universities/removeSpeciality", {
                 speciality: specId,
                 id: id
+            });
+
+            store.dispatch("universities/fetchUniversity", id);
+        }
+
+        function addExam(event) {
+            const {specialityUniversityId, examId} = Object.fromEntries(new FormData(event.target));
+
+            this.specialityUniversityId = specialityUniversityId;
+            this.examId = examId;
+
+            store.dispatch("specialityUniversity/addExam", {
+                exam: this.examId,
+                id: this.specialityUniversityId,
+            });
+
+            store.dispatch("universities/fetchUniversity", id);
+        }
+
+        function removeExam(pivot) {
+            console.log(pivot);
+            store.dispatch("specialityUniversity/removeExam", {
+                exam: pivot.exam_id,
+                id: pivot.speciality_university_id,
             });
 
             store.dispatch("universities/fetchUniversity", id);
@@ -148,7 +197,9 @@ export default {
             id,
             updateUniversity,
             addSpeciality,
-            removeSpeciality
+            removeSpeciality,
+            addExam,
+            removeExam
         }
     },
 }
@@ -169,6 +220,12 @@ export default {
     width: 7rem;
 }
 #speciality-price-label {
+    width: 7rem;
+}
+#exam-id-label {
+    width: 7rem;
+}
+#speciality-university-id-label {
     width: 7rem;
 }
 

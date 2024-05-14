@@ -4,7 +4,8 @@ const state = {
     searchedUniversities: [],
     university: [],
     errors: [],
-    universitySpeciality: []
+    universitySpeciality: [],
+    messages: [],
 };
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
     getUniversity: (state) => state.university,
     getErrors: (state) => state.errors,
     getUniversitySpeciality: (state) => state.universitySpeciality,
+    getMessages: (state) => state.messages,
 };
 
 const actions = {
@@ -82,6 +84,22 @@ const actions = {
         }
     },
 
+    async deleteUniversity({ commit }, id) {
+        const url = "universities/" + id;
+        try {
+            const university = await axios.delete(
+                url
+            ).then(response => (this.university = response));
+            commit("SET_MESSAGES", university);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
+
     async addSpeciality({ commit }, {speciality, price, id}){
         const url = "universities/" + id.value + "/specialties";
         try {
@@ -100,9 +118,11 @@ const actions = {
 
     async removeSpeciality({ commit }, {speciality, id}){
         const url = "universities/" + id.value + "/specialties";
+        console.log(speciality);
+        console.log(id.value);
         try {
             const universitySpeciality = await axios.delete(
-                url, speciality
+                url, { data: {speciality: speciality } }
             ).then(response => (this.universitySpeciality = response));
             commit("SET_UNIVERSITY_SPECIALITY", universitySpeciality);
         }
@@ -127,6 +147,9 @@ const mutations = {
     },
     SET_UNIVERSITY_SPECIALITY(state, universitySpeciality) {
         state.universitySpeciality = universitySpeciality;
+    },
+    SET_MESSAGES(state, messages) {
+        state.messages = messages;
     }
 };
 
