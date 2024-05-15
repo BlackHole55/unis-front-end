@@ -20,11 +20,25 @@
                         <button class="btn" id="btn" type="submit">Update</button>
                     </div>
                 </form>
-                <!-- <div class="text-end">{{ getUniversity?.university?.city }}, {{ getUniversity?.university?.address }}</div> -->
-                <!-- <div class="pt-3">&emsp;{{ getUniversity?.university?.description }}</div> -->
-                <!-- <div class="text-end pt-2">
-                    <a class="btn" id="btn" :href="getUniversity?.university?.link_to_website" target="_blank">More info</a>
-                </div> -->
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <h5 class="pt-3 fw-bold">Общежитие</h5>
+                <a class="btn w-100" id="btn" :href="'/admin/university/' + id + '/dorms/post'">Post new dorm</a>
+                <div class="mt-3" v-for="dorm in getUniversity?.university?.dorms" :key="dorm.id">
+                    <div class="card p-2">
+                        <div>{{ dorm.city }}, {{ dorm.address }}</div>
+                        <div class="py-2">&emsp;{{ dorm.description }}</div>
+                        <div class="card-footer d-flex">
+                            <button class="btn btn-outline-danger me-auto" @click="deleteDorm(dorm.id)">Delete</button>
+                            <a class="btn me-3" id="btn" >Edit</a>
+                            <div class="card-text pt-2">{{ dorm.price_tenge }}₸</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col"></div>
         </div>
@@ -107,8 +121,6 @@ export default {
         const getUniversity = computed(() => store.getters["universities/getUniversity"]);
         // const getErrors = computed(() => store.getters['universities/getUniversity']);
 
-        console.log(getUniversity);
-
         function updateUniversity(event) {
             const {name, city, address, description, link_to_website} = Object.fromEntries(new FormData(event.target));
             this.name = name;
@@ -135,6 +147,12 @@ export default {
             });
             
             return updateForm;
+        }
+
+        function deleteDorm(dormId) {
+            store.dispatch("dorms/deleteDorm", dormId);
+
+            store.dispatch("universities/fetchUniversity", id);
         }
 
         function addSpeciality(event) {
@@ -196,6 +214,7 @@ export default {
             getUniversity,
             id,
             updateUniversity,
+            deleteDorm,
             addSpeciality,
             removeSpeciality,
             addExam,
