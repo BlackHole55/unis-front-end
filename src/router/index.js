@@ -6,6 +6,7 @@ import AdminMain from '@/components/AdminMain.vue'
 import DormsApp from '@/components/DormsApp.vue'
 import AdminDorms from '@/components/AdminDorms.vue'
 import PostDorm from '@/components/PostDorm.vue'
+import UpdateDorm from '@/components/UpdateDorm.vue'
 import SpecialtiesApp from '@/components/SpecialtiesApp.vue'
 import NotFound from '@/components/NotFound.vue'
 import UniversityApp from '@/components/UniversityApp.vue'
@@ -54,9 +55,14 @@ const routes = [
         component: AdminDorms
     },
     {
-        path: '/admin/dorms/post',
+        path: '/admin/university/:id/dorms/post',
         name: 'PostDorms',
         component: PostDorm
+    },
+    {
+        path: '/admin/dorms/:id/update',
+        name: 'UpdateDorm',
+        component: UpdateDorm
     },
     //Speccialties routes
     {
