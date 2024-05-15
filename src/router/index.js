@@ -52,17 +52,26 @@ const routes = [
     {
         path: '/admin/dorms',
         name: 'AdminDorms',
-        component: AdminDorms
+        component: AdminDorms,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
     },
     {
         path: '/admin/university/:id/dorms/post',
         name: 'PostDorms',
-        component: PostDorm
+        component: PostDorm,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
     },
     {
         path: '/admin/dorms/:id/update',
         name: 'UpdateDorm',
-        component: UpdateDorm
+        component: UpdateDorm,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
     },
     //Speccialties routes
     {
