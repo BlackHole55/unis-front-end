@@ -3,15 +3,24 @@ import axios from 'axios';
 
 import MainApp from '@/components/MainApp.vue'
 import AdminMain from '@/components/AdminMain.vue'
+
+
+import UniversityApp from '@/components/UniversityApp.vue'
+import PostUniversity from '@/components/PostUniversity.vue'
+import UpdateUniversity from '@/components/UpdateUniversity.vue'
+
 import DormsApp from '@/components/DormsApp.vue'
 import AdminDorms from '@/components/AdminDorms.vue'
 import PostDorm from '@/components/PostDorm.vue'
 import UpdateDorm from '@/components/UpdateDorm.vue'
+
 import SpecialtiesApp from '@/components/SpecialtiesApp.vue'
+import AdminSpecialties from '@/components/AdminSpecialties.vue'
+import PostSpecialties from '@/components/PostSpeciality.vue'
+import UpdateSpeciality from '@/components/UpdateSpeciality.vue'
+
 import NotFound from '@/components/NotFound.vue'
-import UniversityApp from '@/components/UniversityApp.vue'
-import PostUniversity from '@/components/PostUniversity.vue'
-import UpdateUniversity from '@/components/UpdateUniversity.vue'
+
 import LoginAdmin from '@/components/LoginAdmin.vue'
 
 
@@ -39,6 +48,28 @@ const routes = [
         path: '/admin/main',
         name: 'AdminMain',
         component: AdminMain,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    //Universities routes
+    {
+        path: '/universities/:id',
+        name: 'UniversityApp',
+        component: UniversityApp
+    },
+    {
+        path: '/admin/universities/post',
+        name: 'PostUniversity',
+        component: PostUniversity,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    {
+        path: '/admin/universities/:id/update',
+        name: 'UpdateUniversity',
+        component: UpdateUniversity,
         beforeEnter: (to, from, next) => {
             guard(to, from, next);
         }
@@ -73,30 +104,32 @@ const routes = [
             guard(to, from, next);
         }
     },
-    //Speccialties routes
+    //Specialties routes
     {
         path: '/specialties',
         name: 'SpecialtiesApp',
         component: SpecialtiesApp
     },
-    //Universities routes
     {
-        path: '/universities/:id',
-        name: 'UniversityApp',
-        component: UniversityApp
-    },
-    {
-        path: '/admin/universities/post',
-        name: 'PostUniversity',
-        component: PostUniversity,
+        path: '/admin/specialties',
+        name: 'AdminSpecialties',
+        component: AdminSpecialties,
         beforeEnter: (to, from, next) => {
             guard(to, from, next);
         }
     },
     {
-        path: '/admin/universities/:id/update',
-        name: 'UpdateUniversity',
-        component: UpdateUniversity,
+        path: '/admin/specialties/post',
+        name: 'PostSpecialties',
+        component: PostSpecialties,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    {
+        path: '/admin/specialties/:id/update',
+        name: 'UpdateSpeciality',
+        component: UpdateSpeciality,
         beforeEnter: (to, from, next) => {
             guard(to, from, next);
         }
