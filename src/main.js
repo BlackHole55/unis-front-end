@@ -15,8 +15,7 @@ const getToken = computed(() => store.getters["admin/getToken"]);
 
 if (getToken.value) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${getToken.value}`;
-    console.log(getToken.value);
-}
+}   
 
 // Handle token expiration or invalid tokens:
 axios.interceptors.response.use(

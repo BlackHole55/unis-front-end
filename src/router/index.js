@@ -19,6 +19,11 @@ import AdminSpecialties from '@/components/AdminSpecialties.vue'
 import PostSpecialties from '@/components/PostSpeciality.vue'
 import UpdateSpeciality from '@/components/UpdateSpeciality.vue'
 
+import ExamsApp from '@/components/ExamsApp.vue'
+import AdminExams from '@/components/AdminExams.vue'
+import PostExam from '@/components/PostExam.vue'
+import UpdateExam from '@/components/UpdateExam.vue'
+
 import NotFound from '@/components/NotFound.vue'
 
 import LoginAdmin from '@/components/LoginAdmin.vue'
@@ -130,6 +135,36 @@ const routes = [
         path: '/admin/specialties/:id/update',
         name: 'UpdateSpeciality',
         component: UpdateSpeciality,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    //Exams routes
+    {
+        path: '/exams',
+        name: 'ExamsApp',
+        component: ExamsApp        
+    },
+    {
+        path: '/admin/exams',
+        name: 'AdminExams',
+        component: AdminExams,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    {
+        path: '/admin/exams/post',
+        name: 'PostExam',
+        component: PostExam,
+        beforeEnter: (to, from, next) => {
+            guard(to, from, next);
+        }
+    },
+    {
+        path: '/admin/exams/:id/update',
+        name: 'UpdateExam',
+        component: UpdateExam,
         beforeEnter: (to, from, next) => {
             guard(to, from, next);
         }

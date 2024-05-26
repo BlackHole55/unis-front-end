@@ -5,18 +5,20 @@
             <div class="col-10">
                 <form @submit.prevent="updateDorm">
                     <div class="d-flex flex-row">
-                        <label for="city" class="fw-bold pt-2 pe-1">City</label>
+                        <label for="city" class="fw-bold pt-2 pe-1">Қала</label>
                         <input type="text" class="form-control text-end" id="city" name="city" placeholder="Enter city" :value="getDorm?.dorm?.city">
-                        <label for="city" class="fw-bold pt-2 ps-2 pe-1">Address</label>
+                        <label for="city" class="fw-bold pt-2 ps-2 pe-1">Мекенжай</label>
                         <input type="text" class="form-control text-end" id="address" name="address" placeholder="Enter address" :value="getDorm?.dorm?.address">
                     </div>
                     <textarea type="text" class="form-control mt-3" id="description" name="description" placeholder="Enter description" :value="getDorm?.dorm?.description"></textarea>
                     <div class="d-flex flex-row">
-                        <label for="price" class="fw-bold pt-4 me-1">Link</label>
+                        <label for="price" class="fw-bold pt-4 me-1">Бағасы</label>
                         <input type="number" class="form-control mt-3" id="price" name="price" placeholder="Enter price" :value="getDorm?.dorm?.price_tenge">
                     </div>
+                    <div class="alert alert-danger mt-2" v-if="getMessages?.response?.data?.message">{{ getMessages?.response?.data?.message }}</div>
+                    <div class="alert alert-success mt-2" v-if="getMessages?.success">{{ getMessages?.success }}</div>
                     <div class="text-end pt-3">
-                        <button class="btn" id="btn" type="submit">Update</button>
+                        <button class="btn" id="btn" type="submit">Жаңарту</button>
                     </div>
                 </form>
             </div>
@@ -39,9 +41,7 @@ export default {
         const id = computed(() => route.params.id);  
 
         const getDorm = computed(() => store.getters["dorms/getDorm"]);
-        // const getErrors = computed(() => store.getters['universities/getUniversity']);
-
-        console.log(getDorm);
+        const getMessages = computed(() => store.getters["dorms/getMessages"]);
 
         onMounted(() => {
             store.dispatch("dorms/fetchDorm", id);
@@ -62,7 +62,6 @@ export default {
             };
 
             store.dispatch("dorms/updateDorm", {
-                name: this.name,
                 city: this.city,
                 address: this.address,
                 description: this.description,
@@ -70,20 +69,16 @@ export default {
                 id: id
             });
             
+            store.dispatch("dorms/fetchDorm", id);
+
             return updateForm;
-        }
-
-        function deleteDorm(dormId) {
-            store.dispatch("dorms/deleteDorm", dormId);
-
-            store.dispatch("universities/fetchUniversity", id);
         }
 
         return {
             getDorm,
             id,
             updateDorm,
-            deleteDorm,
+            getMessages
         }
     },
 }

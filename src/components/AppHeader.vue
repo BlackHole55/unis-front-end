@@ -8,27 +8,31 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page"><RouterLink to="/">Home</RouterLink></a>
+                    <a class="nav-link" aria-current="page"><RouterLink to="/">Басты</RouterLink></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"><RouterLink to="/dorms">Dorms</RouterLink></a>
+                    <a class="nav-link"><RouterLink to="/dorms">Жатақханалар</RouterLink></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"><RouterLink to="/specialties">Specialties</RouterLink></a>
+                    <a class="nav-link"><RouterLink to="/specialties">Мамандықтар</RouterLink></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"><RouterLink to="/exams">Емтихандар</RouterLink></a>
                 </li>
                 <li>
-                    <a class="nav-link py-2" id="admin"  v-if="!isLogged"><RouterLink to="/admin/main">Admin</RouterLink></a>
+                    <a class="nav-link py-2" id="admin"  v-if="!isLogged"><RouterLink to="/admin/main">Админ</RouterLink></a>
                 </li>
                 <li class="nav-item dropdown" id="dropdown" v-if="isLogged"> 
                     <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Admin
+                        Админ
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item"><RouterLink to="/admin/main">Main</RouterLink></a></li>
-                        <li><a class="dropdown-item">Dorms</a></li>
-                        <li><a class="dropdown-item">Specialties</a></li>
+                        <li><RouterLink to="/admin/main"><a class="dropdown-item">Басты</a></RouterLink></li>
+                        <li><RouterLink to="/admin/dorms"><a class="dropdown-item">Жатақханалар</a></RouterLink></li>
+                        <li><RouterLink to="/admin/specialties"><a class="dropdown-item">Мамандықтар</a></RouterLink></li>
+                        <li><RouterLink to="/admin/exams"><a class="dropdown-item">Емтихандар</a></RouterLink></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" id="logOut" @click="logOut">Log out</a></li>
+                        <li><a class="dropdown-item" id="logOut" @click="logOut">Шығу</a></li>
                     </ul>
                 </li>
             </ul>
@@ -67,6 +71,11 @@ export default {
 @media (max-width: 991.98px) {
     .nav-link {
         text-align: center;
+        font-size: larger;
+    }
+    .dropdown-item {
+        text-align: center;
+        font-size: larger;
     }
 }
 @media (min-width: 991.98px) {

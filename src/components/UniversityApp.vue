@@ -7,7 +7,7 @@
                 <div class="text-end">{{ getUniversity?.university?.city }}, {{ getUniversity?.university?.address }}</div>
                 <div class="pt-3">&emsp;{{ getUniversity?.university?.description }}</div>
                 <div class="text-end pt-2">
-                    <a class="btn" id="btn" :href="getUniversity?.university?.link_to_website" target="_blank">More info</a>
+                    <a class="btn" id="btn" :href="getUniversity?.university?.link_to_website" target="_blank">Веб-сайтқа сілтеме</a>
                 </div>
             </div>
             <div class="col"></div>
@@ -15,12 +15,12 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-10">
-                <h5 class="pt-3 fw-bold">Общежитие</h5>
-                <div v-for="dorm in getUniversity?.university?.dorms" :key="dorm.id">
+                <h5 class="pt-3 fw-bold" v-if="getUniversity?.university?.dorms?.[0]">Жатақханалар</h5>
+                <div class="mt-3" v-for="dorm in getUniversity?.university?.dorms" :key="dorm.id">
                     <div class="card p-2">
-                        <div>{{ dorm.address }}</div>
+                        <div>{{ dorm.city }}, {{ dorm.address }}</div>
                         <div class="py-2">&emsp;{{ dorm.description }}</div>
-                        <div class="card-footer text-end pt-2">Стоимость: {{ dorm.price_tenge }} KZT</div>
+                        <div class="card-footer text-end pt-2" v-if="dorm.price_tenge">Бағасы: {{ dorm.price_tenge }} KZT</div>
                     </div>
                 </div>
             </div>
@@ -29,17 +29,18 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-10">
-                <h5 class="pt-3 fw-bold">Специальности</h5>
+                <h5 class="pt-3 fw-bold" v-if="getUniversity?.university?.specialties?.[0]">Мамандықтар</h5>
                 <div v-for="specialty in getUniversity?.university?.specialties" :key="specialty.id"> 
                     <div class="card p-2 mt-3">
                         <div>{{ specialty.name }}</div>
                         <div class="py-2">&emsp;{{ specialty.description }}</div>
                         <div v-for="specialityUniversity in getUniversity?.specialityUniversity" :key="specialityUniversity.id">
                             <div v-if="specialityUniversity.specialty_id === specialty.id">
-                                <div class="card-footer text-end pt-2">Стоимость: {{ specialityUniversity.price_per_year_tenge }} KZT</div>
+                                <div class="card-footer text-end pt-2" v-if="specialityUniversity.price_per_year_tenge">Бағасы: {{ specialityUniversity.price_per_year_tenge }} KZT</div>
+                                <div class="card-footer" v-if="specialityUniversity.exams[0]"></div>
                             </div>
                             <div v-for="exam in specialityUniversity.exams" :key="exam.id">
-                                <div v-if=" exam.pivot.speciality_university_id === specialty.id">
+                                <div v-if="specialityUniversity.specialty_id === specialty.id">
                                     <div>{{ exam.name }}</div>
                                 </div>
                             </div>
@@ -69,6 +70,8 @@ export default {
         const id = computed(() => route.params.id);
 
         const getUniversity = computed(() => store.getters["universities/getUniversity"]);
+
+        console.log(getUniversity);
 
         onMounted(() => {
             store.dispatch("universities/fetchUniversity", id);

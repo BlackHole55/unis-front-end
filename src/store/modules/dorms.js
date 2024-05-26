@@ -29,6 +29,20 @@ const actions = {
             }
         }
     },
+    async moveToPage({ commit }, pageUrl) {
+        try {
+            const dorms = await axios.get(
+                pageUrl
+            ).then(response => (this.dorms = response));
+            commit("SET_DORMS", dorms.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
     async fetchDorm({ commit }, id) {
         const url = "dorms/" + id.value;
         try {
@@ -65,11 +79,11 @@ const actions = {
             const dorm = await axios.patch(
                 url, {city, address, description, price_tenge}
             ).then(response => (this.dorm = response));
-            commit("SET_DORM", dorm.data);
+            commit("SET_MESSAGES", dorm.data);
         }
         catch (error) {
             if(error.response != undefined) {
-                commit("SET_ERRORS", error);
+                commit("SET_MESSAGES", error);
                 console.log(error);
             }
         }
@@ -88,7 +102,21 @@ const actions = {
                 console.log(error);
             }
         }
-    }
+    },
+    async search({ commit }, search){
+        try {
+            const dorms = await axios.post(
+                "dorms/search", search,
+            ).then(response => (this.dorms = response));
+            commit("SET_DORMS", dorms.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
 };
 
 const mutations = {

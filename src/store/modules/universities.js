@@ -6,6 +6,7 @@ const state = {
     errors: [],
     universitySpeciality: [],
     messages: [],
+    postUpdateMessages: [],
 };
 
 const getters = {
@@ -14,6 +15,7 @@ const getters = {
     getErrors: (state) => state.errors,
     getUniversitySpeciality: (state) => state.universitySpeciality,
     getMessages: (state) => state.messages,
+    getPostUpdateMessages: (state) => state.postUpdateMessages,
 };
 
 const actions = {
@@ -25,7 +27,25 @@ const actions = {
             commit("SET_UNIVERSITIES", universities.data);
         }
         catch (error) {
-            console.log(error);
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
+    
+    async moveToPage({ commit }, pageUrl) {
+        try {
+            const universities = await axios.get(
+                pageUrl
+            ).then(response => (this.universities = response));
+            commit("SET_UNIVERSITIES", universities.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
         }
     },
 
@@ -37,7 +57,10 @@ const actions = {
             commit("SET_UNIVERSITIES", searchedUniversities.data);
         }
         catch (error) {
-            console.log(error);
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
         }
     },
 
@@ -50,7 +73,10 @@ const actions = {
             commit("SET_UNIVERSITY", university.data);
         }
         catch (error) {
-            console.log(error);
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
         }
     },
 
@@ -59,11 +85,12 @@ const actions = {
             const university = await axios.post(
                 "universities", {name, city, address, description, link_to_website}
             ).then(response => (this.university = response));
-            commit("SET_UNIVERSITY", university.data);
+            commit("SET_MESSAGES", university.data);
         }
         catch (error) {
             if(error.response != undefined) {
-                commit("SET_ERRORS", error);
+                commit("SET_MESSAGES", error);
+                console.log(error);
             }
         }
     },
@@ -74,11 +101,11 @@ const actions = {
             const university = await axios.patch(
                 url, {name, city, address, description, link_to_website}
             ).then(response => (this.university = response));
-            commit("SET_UNIVERSITY", university.data);
+            commit("SET_MESSAGES", university.data);
         }
         catch (error) {
             if(error.response != undefined) {
-                commit("SET_ERRORS", error);
+                commit("SET_MESSAGES", error);
                 console.log(error);
             }
         }
@@ -118,8 +145,6 @@ const actions = {
 
     async removeSpeciality({ commit }, {speciality, id}){
         const url = "universities/" + id.value + "/specialties";
-        console.log(speciality);
-        console.log(id.value);
         try {
             const universitySpeciality = await axios.delete(
                 url, { data: {speciality: speciality } }
@@ -150,6 +175,9 @@ const mutations = {
     },
     SET_MESSAGES(state, messages) {
         state.messages = messages;
+    },
+    SET_POST_UPDATE_MESSAGES(state, postUpdateMessages) {
+        state.postUpdateMessages = postUpdateMessages;
     }
 };
 

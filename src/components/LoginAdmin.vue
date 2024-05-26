@@ -1,19 +1,25 @@
 <template>
     <div class="container pt-3">
-      <h1 class="text-center">Log In</h1>
-      <div class="d-flex justify-content-center">
-        <form class="w-50 border p-3" @submit.prevent="login">
-            <div class="form-group">
-                <label for="name">Name</label>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-lg-8">
+          <h1 class="text-center">Кіру</h1>
+          <div class="d-flex justify-content-center">
+            <form class="w-75 border p-3" @submit.prevent="login">
+              <div class="form-group">
+                <label for="name">Аты</label>
                 <input type="text" class="form-control" id="name" aria-label="name" placeholder="Enter name"  v-model="form.name" style="background-color: #008080">
-            </div>
-            <div class="form-group pt-2">
-                <label for="password">Password</label>
+              </div>
+              <div class="form-group pt-2">
+                <label for="password">Құпия сөз</label>
                 <input type="password" class="form-control" id="password" placeholder="Password"  v-model="form.password" style="background-color: #008080">
-            </div>
-            <button type="submit" id="loginBtn" class="btn  mt-2">Log In</button>
-            <div class="alert alert-danger mt-2" v-if="getErrors?.response?.data?.message">{{ getErrors?.response?.data?.message }}</div>
-        </form>
+              </div>
+              <button type="submit" id="loginBtn" class="btn  mt-2">Кіру</button>
+              <div class="alert alert-danger mt-2" v-if="getErrors?.response?.data?.message">{{ getErrors?.response?.data?.message }}</div>
+            </form>
+          </div>
+        </div>
+        <div class="col"></div>
       </div>
     </div>
 </template>

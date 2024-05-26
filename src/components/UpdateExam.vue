@@ -3,9 +3,13 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-10">
-                <form @submit.prevent="updateSpeciality">
-                    <input type="text" class="form-control form-control-lg text-center h5 fw-bold" id="name" name="name" placeholder="Enter name" :value="getSpeciality?.speciality?.name">
-                    <textarea type="text" class="form-control mt-3" id="description" name="description" placeholder="Enter description" :value="getSpeciality?.speciality?.description"></textarea>
+                <form @submit.prevent="updateExam">
+                    <input type="text" class="form-control form-control-lg text-center h5 fw-bold" id="name" name="name" placeholder="Enter name" :value="getExam?.exam?.name">
+                    <textarea type="text" class="form-control mt-3" id="description" name="description" placeholder="Enter description" :value="getExam?.exam?.description"></textarea>
+                    <div class="d-flex flex-row">
+                        <label for="link-to-website" class="fw-bold pt-4 me-1">Сілтеме</label>
+                        <input type="url" class="form-control mt-3" id="link-to-website" name="link_to_website" placeholder="Enter link to website" :value="getExam?.exam?.link_to_website">
+                    </div>
                     <div class="alert alert-danger mt-2" v-if="getMessages?.response?.data?.message">{{ getMessages?.response?.data?.message }}</div>
                     <div class="alert alert-success mt-2" v-if="getMessages?.success">{{ getMessages?.success }}</div>
                     <div class="text-end pt-3">
@@ -31,42 +35,43 @@ export default {
 
         const id = computed(() => route.params.id);  
 
-        const getSpeciality = computed(() => store.getters["specialties/getSpeciality"]);
-        const getMessages = computed(() => store.getters["specialties/getMessages"]);
-
-        console.log(getSpeciality);
+        const getExam = computed(() => store.getters["exams/getExam"]);
+        const getMessages = computed(() => store.getters["exams/getMessages"]);
 
         onMounted(() => {
-            store.dispatch("specialties/fetchSpeciality", id);
+            store.dispatch("exams/fetchExam", id);
         });
 
-        function updateSpeciality(event) {
-            const {name, description} = Object.fromEntries(new FormData(event.target));
+        function updateExam(event) {
+            const {name, description, link_to_website} = Object.fromEntries(new FormData(event.target));
             this.name = name;
             this.description = description;
+            this.link_to_website = link_to_website;
 
             const updateForm = {
                 name: this.name,
                 description: this.description,
+                link_to_website: this.link_to_website,
             };
 
-            store.dispatch("specialties/updateSpeciality", {
+            store.dispatch("exams/updateExam", {
                 name: this.name,
                 description: this.description,
+                link_to_website: this.link_to_website,
                 id: id
             });
 
-            store.dispatch("specialties/fetchSpeciality", id);
+            store.dispatch("exams/fetchExam", id);
             
             return updateForm;
         }
 
 
         return {
-            getSpeciality,
+            getExam,
             id,
-            updateSpeciality,
-            getMessages
+            updateExam,
+            getMessages,
         }
     },
 }

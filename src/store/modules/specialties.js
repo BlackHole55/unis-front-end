@@ -29,6 +29,20 @@ const actions = {
             }
         }
     },
+    async moveToPage({ commit }, pageUrl) {
+        try {
+            const specialities = await axios.get(
+                pageUrl
+            ).then(response => (this.specialities = response));
+            commit("SET_SPECIALTIES", specialities.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
     async fetchSpeciality({ commit }, id) {
         const url = "specialties/" + id.value;
         try {
@@ -50,11 +64,11 @@ const actions = {
             const speciality = await axios.post(
                 "specialties", { name, description }
             ).then(response => (this.speciality = response));
-            commit("SET_SPECIALITY", speciality.data);
+            commit("SET_MESSAGES", speciality.data);
         }
         catch (error) {
             if(error.response != undefined) {
-                commit("SET_ERRORS", error);
+                commit("SET_MESSAGES", error);
                 console.log(error);
             }
         }
@@ -65,11 +79,11 @@ const actions = {
             const speciality = await axios.patch(
                 url, {name, description}
             ).then(response => (this.speciality = response));
-            commit("SET_SPECIALITY", speciality.data);
+            commit("SET_MESSAGES", speciality.data);
         }
         catch (error) {
             if(error.response != undefined) {
-                commit("SET_ERRORS", error);
+                commit("SET_MESSAGES", error);
                 console.log(error);
             }
         }
@@ -81,6 +95,21 @@ const actions = {
                 url
             ).then(response => (this.speciality = response));
             commit("SET_MESSAGES", speciality.data);
+        }
+        catch (error) {
+            if(error.response != undefined) {
+                commit("SET_ERRORS", error);
+                console.log(error);
+            }
+        }
+    },
+    async search({ commit }, search){
+        try {
+            const specialties = await axios.post(
+                "specialties/search", search,
+            ).then(response => (this.specialties = response));
+            commit("SET_SPECIALTIES", specialties.data);
+            console.log(specialties.data);
         }
         catch (error) {
             if(error.response != undefined) {

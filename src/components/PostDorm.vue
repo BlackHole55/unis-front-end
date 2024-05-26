@@ -1,26 +1,25 @@
 <template>
     <div class="container pt-3">
-        <h1 class="text-center">Post Dorm</h1>
+        <h1 class="text-center">Жатақхананы жариялау</h1>
         <div class="d-flex justify-content-center">
             <form class="w-50 border p-3" @submit.prevent="postDorm">
                 <div class="form-group pt-2">
-                    <label for="city">City</label>
+                    <label for="city">Қала</label>
                     <input type="text" class="form-control" id="city" placeholder="Enter city"  v-model="form.city" style="background-color: #008080">
                 </div>
                 <div class="form-group pt-2">
-                    <label for="address">Address</label>
+                    <label for="address">Мекенжай</label>
                     <input type="text" class="form-control" id="address" placeholder="Enter address"  v-model="form.address" style="background-color: #008080">
                 </div>
                 <div class="form-group pt-2">
-                    <label for="description">Description</label>
+                    <label for="description">Сипаттама</label>
                     <textarea type="text" class="form-control" id="description" placeholder="Enter description"  v-model="form.description" style="background-color: #008080"></textarea>
                 </div>
                 <div class="form-group pt-2">
-                    <label for="price">Price</label>
+                    <label for="price">Бағасы</label>
                     <input type="number" class="form-control" id="price" placeholder="Enter price"  v-model="form.price" style="background-color: #008080">
                 </div>
-                <div class="alert alert-danger mt-2" v-if="getErrors?.response?.data?.message">{{ getErrors?.response?.data?.message }}</div>
-                <button type="submit" id="loginBtn" class="btn  mt-2">Post</button>
+                <button type="submit" id="loginBtn" class="btn  mt-2">Жариялау</button>
             </form>
         </div> 
     </div>
@@ -47,8 +46,6 @@
 
             const id = computed(() => route.params.id);
 
-            const getErrors = computed(() => store.getters["universities/getErrors"]);
-
             function postDorm(){
                 store.dispatch("dorms/postDorm", {
                     id: id,
@@ -65,7 +62,6 @@
                 postDorm,
                 form,
                 id,
-                getErrors
             }
         }
     }
