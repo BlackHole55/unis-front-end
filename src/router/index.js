@@ -94,7 +94,7 @@ const routes = [
         }
     },
     {
-        path: '/admin/university/:id/dorms/post',
+        path: '/admin/universities/:id/dorms/post',
         name: 'PostDorms',
         component: PostDorm,
         beforeEnter: (to, from, next) => {

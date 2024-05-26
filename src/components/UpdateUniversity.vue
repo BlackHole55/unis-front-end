@@ -29,7 +29,7 @@
             <div class="col"></div>
             <div class="col-10">
                 <h5 class="pt-3 fw-bold">Жатақханалар</h5>
-                <a class="btn w-100" id="btn" :href="'/admin/university/' + id + '/dorms/post'">Жаңа жатақхананы жариялау</a>
+                <a class="btn w-100" id="btn" :href="'/admin/universities/' + id + '/dorms/post'">Жаңа жатақхананы жариялау</a>
                 <div class="mt-3" v-for="dorm in getUniversity?.university?.dorms" :key="dorm.id">
                     <div class="card p-2">
                         <div>{{ dorm.city }}, {{ dorm.address }}</div>
